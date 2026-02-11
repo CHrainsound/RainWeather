@@ -1,19 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.MainActivity">
+    android:id="@+id/swipe_refresh">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/rootLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="ExtraText">
+
+            <!-- 背景视频 -->
+            <com.google.android.exoplayer2.ui.StyledPlayerView
+                android:id="@+id/pv_background"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:keepScreenOn="true"
+                app:hide_on_touch="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:resize_mode="zoom"
+                app:use_controller="false" />
+
+            <!-- 半透明遮罩层 -->
+            <View
+                android:id="@+id/mask"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#30000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 位置信息 -->
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="260dp"
+                android:text="南岗区 南昌路"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="南岗区 南昌路" />
+
+            <!-- 主要温度 -->
+            <TextView
+                android:id="@+id/tv_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-light"
+                android:text="-4°"
+                android:textColor="#FFFFFF"
+                android:textSize="120sp"
+
+                app:layout_constraintStart_toStartOf="@+id/tv_location"
+                app:layout_constraintTop_toBottomOf="@id/tv_location"
+                tools:text="-4°" />
+
+            <!-- 天气描述 -->
+            <TextView
+                android:id="@+id/tv_weather_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="晴 最高-4° 最低-18°"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+
+                app:layout_constraintStart_toStartOf="@+id/tv_temperature"
+                app:layout_constraintTop_toBottomOf="@id/tv_temperature"
+                tools:text="晴 最高-4° 最低-18°" />
+
+            <!-- AQI -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_air_quality"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#30FFFFFF"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="空气优 34"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toStartOf="@+id/tv_weather_desc"
+                app:layout_constraintTop_toBottomOf="@+id/tv_weather_desc"
+                app:strokeWidth="0dp"
+                tools:text="空气优 34" />
+
+            <!-- 多日预报卡片 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_daily_forecast"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:cardBackgroundColor="#50FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_air_quality">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_daily_forecast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="16dp"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" /> <!-- 👈 关键！ -->
+
+                    <!-- 查看更多按钮 -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_view_more"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:backgroundTint="#66FFFFFF"
+                        android:gravity="center"
+                        android:minHeight="48dp"
+                        android:paddingVertical="12dp"
+                        android:text="查看近15日天气"
+                        android:textColor="#90FFFFFF"
+                        app:strokeWidth="0dp"
+                        tools:text="查看近15日天气" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

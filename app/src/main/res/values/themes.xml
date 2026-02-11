@@ -4,6 +4,10 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+    <style name="Widget.MaterialComponents.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/button_tint</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
 
     <style name="Theme.RainWeather" parent="Base.Theme.RainWeather" />
 </resources>

@@ -2,10 +2,10 @@ package com.example.rainweather.repository.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
-
 /**
- * 彩云天气 API v2.6 模型类
- * 对应 JSON 根对象
+ * description ： TODO:彩云天气 API v2.6 模型类
+ * email : 3014386984@qq.com
+ * date : 2/8 14:00
  */
 public class WeatherResponse {
 
@@ -34,7 +34,7 @@ public class WeatherResponse {
     public long serverTime; // 服务器时间戳（秒）
 
     @SerializedName("location")
-    public double[] location; // [纬度, 经度] — 注意顺序！
+    public double[] location; //[经度，纬度]
 
     @SerializedName("result")
     public Result result;
@@ -46,7 +46,7 @@ public class WeatherResponse {
     public String forecastKeypoint; // 预报关键描述，如 "多云，今天夜里23点后转阴..."
 
 
-    // ==================== 内部类 ====================
+    // 内部类
 
     /**
      * result 对象
