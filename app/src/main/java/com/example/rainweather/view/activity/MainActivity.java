@@ -1,12 +1,10 @@
 package com.example.rainweather.view.activity;
-
-/**
- * description ：
- * TODO: 定位，ui刷新，反地理编码，周期管理，日期格式化
- * email : 3014386984@qq.com
- * date : 2/11 13:00
+/*
+  description ：
+  TODO: 定位，ui刷新，反地理编码，周期管理，日期格式化
+  email : 3014386984@qq.com
+  date : 2/11 13:00
  */
-
 import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -316,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
     //动态背景视频（根据天气类型和昼夜状态）
     //多日天气预报列表
     private void updateUI(WeatherResponse weather) {
-        boolean isNight = false;
+        boolean isNight;
         try {
             // API日落时间格式"18:37"
             String sunsetTimeStr = weather.result.daily.astro.get(0).sunset.time;
@@ -363,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("WEATHER_DEBUG", "Day " + i + ": date=" + dateStr + ", skycon=" + skyconValue);
 
                     //转换日期为"今天"/"明天"/"周五"
-                    String displayDate = formatDateForDisplay(dateStr, i);
+                    String displayDate = formatDateForDisplay(dateStr);
 
                     dailyItems.add(new DailyWeatherItem(displayDate, skyconValue, maxTemp, minTemp));
                 }
@@ -373,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 日期格式化
-    private String formatDateForDisplay(String isoDateTime, int i) {
+    private String formatDateForDisplay(String isoDateTime) {
         if (TextUtils.isEmpty(isoDateTime)) return "";
 
         try {
