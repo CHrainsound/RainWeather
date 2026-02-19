@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">Rain Weather</string>
+    <!--污染物级别-->
+
+    <integer name="pm2.5_l1">50</integer>
+    <integer name="pm2.5_l2">115</integer>
+    <integer name="pm2.5_l3">150</integer>
+    <integer name="pm10_l1">100</integer>
+    <integer name="pm10_l2">180</integer>
+    <integer name="pm10_l3">250</integer>
+    <integer name="so2_l1">50</integer>
+    <integer name="so2_l2">100</integer>
+    <integer name="so2_l3">250</integer>
+    <integer name="no2_l1">50</integer>
+    <integer name="no2_l2">100</integer>
+    <integer name="no2_l3">200</integer>
+    <integer name="o3_l1">160</integer>
+    <integer name="o3_l2">215</integer>
+    <integer name="o3_l3">265</integer>
+    <integer name="co_l1">4</integer>
+    <integer name="co_l2">10</integer>
+    <integer name="co_l3">20</integer>
+
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="monday">周一</string>
+    <string name="tuesday">周二</string>
+    <string name="wednesday">周三</string>
+    <string name="thursday">周四</string>
+    <string name="friday">周五</string>
+    <string name="saturday">周六</string>
+    <string name="sunday">周日</string>
+
 </resources>

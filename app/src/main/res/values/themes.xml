@@ -8,6 +8,9 @@
         <item name="backgroundTint">@color/button_tint</item>
         <item name="strokeWidth">1dp</item>
     </style>
+    <color name="airquality_return_background">#000000</color>
+    <color name="airquality_background">#80D0D0D0</color>
+    <color name="airquality_card_background">#FFFFFF</color>
 
     <style name="Theme.RainWeather" parent="Base.Theme.RainWeather" />
 </resources>

@@ -4,4 +4,7 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <color name="airquality_return_background">#FFFFFF</color>
+    <color name="airquality_background">#000000</color>
+    <color name="airquality_card_background">#2F2F2F</color>
 </resources>

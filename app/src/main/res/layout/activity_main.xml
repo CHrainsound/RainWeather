@@ -3,9 +3,9 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/swipe_refresh">
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -33,29 +33,41 @@
                 app:use_controller="false" />
 
             <!-- 半透明遮罩层 -->
-            <View
+           <View
                 android:id="@+id/mask"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#30000000"
+                android:background="@drawable/main_cover_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/card_daily_forecast" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="18dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="80dp" />
 
             <!-- 位置信息 -->
             <TextView
                 android:id="@+id/tv_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:layout_marginEnd="260dp"
                 android:text="南岗区 南昌路"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/gl_left"
+                app:layout_constraintTop_toTopOf="@id/gl_top"
                 tools:text="南岗区 南昌路" />
 
             <!-- 主要温度 -->
@@ -73,16 +85,16 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_location"
                 tools:text="-4°" />
 
+
             <!-- 天气描述 -->
             <TextView
                 android:id="@+id/tv_weather_desc"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="晴 最高-4° 最低-18°"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
-
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_temperature"
                 app:layout_constraintTop_toBottomOf="@id/tv_temperature"
                 tools:text="晴 最高-4° 最低-18°" />
@@ -91,18 +103,20 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_air_quality"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="-8dp"
+                android:background="@drawable/ic_aqi_button_background"
                 android:backgroundTint="#30FFFFFF"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingStart="12dp"
-                android:paddingTop="6dp"
+                android:paddingTop="2dp"
                 android:paddingEnd="12dp"
-                android:paddingBottom="6dp"
+                android:paddingBottom="2dp"
                 android:text="空气优 34"
                 android:textColor="#FFFFFF"
-                app:layout_constraintStart_toStartOf="@+id/tv_weather_desc"
+                app:layout_constraintStart_toStartOf="@id/gl_left"
                 app:layout_constraintTop_toBottomOf="@+id/tv_weather_desc"
                 app:strokeWidth="0dp"
                 tools:text="空气优 34" />
@@ -113,9 +127,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
-                app:cardBackgroundColor="#50FFFFFF"
-                app:cardCornerRadius="24dp"
+                app:cardBackgroundColor="#60FFFFFF"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
+                android:layout_marginHorizontal="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,9 +149,9 @@
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
                         android:paddingHorizontal="16dp"
-                        android:paddingVertical="16dp"
+                        android:paddingVertical="10dp"
                         android:scrollbars="none"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" /> <!-- 👈 关键！ -->
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                     <!-- 查看更多按钮 -->
                     <com.google.android.material.button.MaterialButton
@@ -144,9 +159,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="5dp"
                         android:backgroundTint="#66FFFFFF"
                         android:gravity="center"
                         android:minHeight="48dp"

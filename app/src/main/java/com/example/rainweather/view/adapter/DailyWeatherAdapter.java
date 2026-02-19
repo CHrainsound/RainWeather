@@ -41,19 +41,24 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DailyWeatherItem item = dataList.get(position);
 
-        // 日期（如 "今天", "明天", "周三"）
         holder.tvDate.setText(item.date);
-
-        // 天气中文描述
         holder.tvWeather.setText(skyconToChinese(item.skycon));
-
-        // 合并温度显示：最低 / 最高
         holder.tvTempRange.setText(String.format("%.0f° / %.0f°", item.minTemp, item.maxTemp));
 
-        // Lottie 动画（从 assets 加载）
-        String lottieFile = getLottieFileName(item.skycon);
-        holder.animationView.setAnimation(lottieFile);
-        holder.animationView.playAnimation();
+        // 只有当动画文件改变时才重新设置
+        String newLottieFile = getLottieFileName(item.skycon);
+        if (!newLottieFile.equals(holder.currentLottieFile)) {
+            holder.currentLottieFile = newLottieFile;
+            holder.animationView.setAnimation(newLottieFile);
+            holder.animationView.playAnimation();
+        } else {
+            // 如果已在播放，无需重复操作
+            if (holder.animationView.isAnimating()) {
+                // 可选：保持播放
+            } else {
+                holder.animationView.playAnimation();
+            }
+        }
     }
 
     @Override
@@ -171,9 +176,11 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
         TextView tvDate;
         TextView tvWeather;
         TextView tvTempRange; // 合并后的温度显示
+        String currentLottieFile = "";
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             animationView = itemView.findViewById(R.id.animation_view);
             tvDate = itemView.findViewById(R.id.tv_date);
             tvWeather = itemView.findViewById(R.id.tv_weather);

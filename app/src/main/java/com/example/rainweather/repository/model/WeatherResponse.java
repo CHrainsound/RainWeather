@@ -1,13 +1,15 @@
 package com.example.rainweather.repository.model;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 /**
  * description ： TODO:彩云天气 API v2.6 模型类
  * email : 3014386984@qq.com
  * date : 2/8 14:00
  */
-public class WeatherResponse {
+public class WeatherResponse implements Serializable {
 
     @SerializedName("status")
     public String status; // "ok" 表示成功
@@ -145,7 +147,7 @@ public class WeatherResponse {
         public double intensity;
     }
 
-    public static class AirQuality {
+    public static class AirQuality implements Serializable  {
         //单位（ug/m3）
         @SerializedName("pm25")
         public int pm25;
@@ -172,7 +174,7 @@ public class WeatherResponse {
         public Description description;
     }
 
-    public static class Aqi {
+    public static class Aqi implements Serializable {
         @SerializedName("chn")
         public int chn; // 中国 AQI
 
@@ -180,7 +182,7 @@ public class WeatherResponse {
         public int usa; // 美国 AQI
     }
 
-    public static class Description {
+    public static class Description implements Serializable {
         @SerializedName("chn")
         public String chn; // 如 "优"
 
