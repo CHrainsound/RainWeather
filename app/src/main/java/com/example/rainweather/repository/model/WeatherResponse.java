@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 /**
- * description ： TODO:彩云天气 API v2.6 模型类
+ * description ：彩云天气 API v2.6 模型类
  * email : 3014386984@qq.com
  * date : 2/8 14:00
  */

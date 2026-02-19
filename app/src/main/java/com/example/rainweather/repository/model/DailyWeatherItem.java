@@ -1,6 +1,7 @@
 package com.example.rainweather.repository.model;
 /**
- * description ： TODO:item模型类
+ * description ：item模型类
+ * toDo：三日天气item
  * email : 3014386984@qq.com
  * date : 2/11 12:00
  */

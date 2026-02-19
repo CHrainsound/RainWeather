@@ -1,5 +1,11 @@
 package com.example.rainweather.view.activity;
 
+/**
+ * description ： TODO：负责展示当前天气详情、背景动态视频、多日预报列表以及空气质量入口
+ * email : 3014386984@qq.com
+ * date : 2/19 16:00
+ */
+
 import static com.example.rainweather.utils.DateUtils.formatDateForDisplay;
 import static com.example.rainweather.utils.VideoUtils.getVideoResourceForSkycon;
 
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private ExoPlayer exoPlayer;
     private int currentVideoResId = -1;
 
-    // UI 组件 (修复：之前代码中使用了但未在类中声明)
+    // UI
     private TextView tvTemperature;
     private TextView tvLocation;
     private TextView tvWeatherDesc;
