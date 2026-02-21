@@ -150,7 +150,7 @@ public class WeatherRepository {
                 // 拼接显示名称：例如 "吉林市 丰满区"
                 String displayCity = cityName;
                 if (district != null && !district.isEmpty() && !cityName.contains(district)) {
-                    displayCity = cityName + " " + district;
+                    displayCity +=district+ " " + town;
                 }
                 // 更新城市名 LiveData
                 locationName.postValue(displayCity);

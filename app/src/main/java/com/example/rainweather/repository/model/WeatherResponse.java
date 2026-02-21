@@ -53,7 +53,7 @@ public class WeatherResponse implements Serializable {
     /**
      * result 对象
      */
-    public static class Result {
+    public static class Result implements Serializable {
         @SerializedName("realtime")
         public Realtime realtime;
 
@@ -68,7 +68,7 @@ public class WeatherResponse implements Serializable {
     /**
      * 实时天气数据
      */
-    public static class Realtime {
+    public static class Realtime implements Serializable{
         @SerializedName("status")
         public String status;
 
@@ -109,7 +109,7 @@ public class WeatherResponse implements Serializable {
         public LifeIndex lifeIndex;
     }
 
-    public static class Wind {
+    public static class Wind implements Serializable{
         @SerializedName("speed")
         public double speed; // 风速（m/s）
 
@@ -117,7 +117,7 @@ public class WeatherResponse implements Serializable {
         public double direction; // 风向（角度，0=北，90=东）
     }
 
-    public static class Precipitation {
+    public static class Precipitation implements Serializable{
         @SerializedName("local")
         public LocalPrecip local;
 
@@ -125,7 +125,7 @@ public class WeatherResponse implements Serializable {
         public NearestPrecip nearest;
     }
 
-    public static class LocalPrecip {
+    public static class LocalPrecip implements Serializable{
         @SerializedName("status")
         public String status;
 
@@ -136,7 +136,7 @@ public class WeatherResponse implements Serializable {
         public double intensity; // 降水强度（mm/h）
     }
 
-    public static class NearestPrecip {
+    public static class NearestPrecip implements Serializable{
         @SerializedName("status")
         public String status;
 
@@ -190,7 +190,7 @@ public class WeatherResponse implements Serializable {
         public String usa; // 如 "良"
     }
 
-    public static class LifeIndex {
+    public static class LifeIndex implements Serializable{
         @SerializedName("ultraviolet")
         public Ultraviolet ultraviolet;
 
@@ -198,7 +198,7 @@ public class WeatherResponse implements Serializable {
         public Comfort comfort;
     }
 
-    public static class Ultraviolet {
+    public static class Ultraviolet implements Serializable{
         @SerializedName("index")
         public int index;
 
@@ -206,7 +206,7 @@ public class WeatherResponse implements Serializable {
         public String desc; // 如 "弱"
     }
 
-    public static class Comfort {
+    public static class Comfort implements Serializable{
         @SerializedName("index")
         public int index;
 
@@ -218,7 +218,7 @@ public class WeatherResponse implements Serializable {
     /**
      * 逐小时预报
      */
-    public static class Hourly {
+    public static class Hourly implements Serializable{
         @SerializedName("status")
         public String status;
 
@@ -259,7 +259,7 @@ public class WeatherResponse implements Serializable {
         public HourlyAirQuality airQuality;
     }
 
-    public static class HourlyValue {
+    public static class HourlyValue implements Serializable{
         @SerializedName("datetime")
         public String datetime; // ISO8601 时间，如 "2026-02-08T15:00+08:00"
 
@@ -267,7 +267,7 @@ public class WeatherResponse implements Serializable {
         public double value;
     }
 
-    public static class HourlyWind {
+    public static class HourlyWind implements Serializable{
         @SerializedName("datetime")
         public String datetime;
 
@@ -278,7 +278,7 @@ public class WeatherResponse implements Serializable {
         public double direction;
     }
 
-    public static class HourlySkycon {
+    public static class HourlySkycon implements Serializable{
         @SerializedName("datetime")
         public String datetime;
 
@@ -286,7 +286,7 @@ public class WeatherResponse implements Serializable {
         public String value; // 如 "CLOUDY"
     }
 
-    public static class HourlyAirQuality {
+    public static class HourlyAirQuality implements Serializable{
         @SerializedName("aqi")
         public List<HourlyAqi> aqi;
 
@@ -294,7 +294,7 @@ public class WeatherResponse implements Serializable {
         public List<HourlyPm25> pm25;
     }
 
-    public static class HourlyAqi {
+    public static class HourlyAqi implements Serializable{
         @SerializedName("datetime")
         public String datetime;
 
@@ -302,7 +302,7 @@ public class WeatherResponse implements Serializable {
         public Aqi value;
     }
 
-    public static class HourlyPm25 {
+    public static class HourlyPm25 implements Serializable{
         @SerializedName("datetime")
         public String datetime;
 
@@ -314,7 +314,7 @@ public class WeatherResponse implements Serializable {
     /**
      * 逐日预报
      */
-    public static class Daily {
+    public static class Daily implements Serializable{
         @SerializedName("status")
         public String status;
 
@@ -379,7 +379,7 @@ public class WeatherResponse implements Serializable {
         public DailyLifeIndex lifeIndex;
     }
 
-    public static class DailyAstro {
+    public static class DailyAstro implements Serializable {
         @SerializedName("date")
         public String date;
 
@@ -390,12 +390,12 @@ public class WeatherResponse implements Serializable {
         public SunEvent sunset;
     }
 
-    public static class SunEvent {
+    public static class SunEvent implements Serializable{
         @SerializedName("time")
         public String time; // 如 "07:37"
     }
 
-    public static class DailyPrecip {
+    public static class DailyPrecip implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -412,7 +412,7 @@ public class WeatherResponse implements Serializable {
         public int probability; // 降水概率（%）
     }
 
-    public static class DailyTemp {
+    public static class DailyTemp implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -426,7 +426,7 @@ public class WeatherResponse implements Serializable {
         public double avg;
     }
 
-    public static class DailyWind {
+    public static class DailyWind implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -440,7 +440,7 @@ public class WeatherResponse implements Serializable {
         public WindStat avg;
     }
 
-    public static class WindStat {
+    public static class WindStat implements Serializable{
         @SerializedName("speed")
         public double speed;
 
@@ -448,7 +448,7 @@ public class WeatherResponse implements Serializable {
         public double direction;
     }
 
-    public static class DailyStat {
+    public static class DailyStat implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -462,7 +462,7 @@ public class WeatherResponse implements Serializable {
         public double avg;
     }
 
-    public static class DailySkycon {
+    public static class DailySkycon implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -470,7 +470,7 @@ public class WeatherResponse implements Serializable {
         public String value;
     }
 
-    public static class DailyAirQuality {
+    public static class DailyAirQuality implements Serializable{
         @SerializedName("aqi")
         public List<DailyAqi> aqi;
 
@@ -478,7 +478,7 @@ public class WeatherResponse implements Serializable {
         public List<DailyPm25> pm25;
     }
 
-    public static class DailyAqi {
+    public static class DailyAqi implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -492,7 +492,7 @@ public class WeatherResponse implements Serializable {
         public Aqi min;
     }
 
-    public static class DailyPm25 {
+    public static class DailyPm25 implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -506,7 +506,7 @@ public class WeatherResponse implements Serializable {
         public int min;
     }
 
-    public static class DailyLifeIndex {
+    public static class DailyLifeIndex implements Serializable{
         @SerializedName("ultraviolet")
         public List<DailyUv> ultraviolet;
 
@@ -523,7 +523,7 @@ public class WeatherResponse implements Serializable {
         public List<DailyIndex> coldRisk;
     }
 
-    public static class DailyUv {
+    public static class DailyUv implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -534,7 +534,7 @@ public class WeatherResponse implements Serializable {
         public String desc; // 如 "最弱"
     }
 
-    public static class DailyIndex {
+    public static class DailyIndex implements Serializable{
         @SerializedName("date")
         public String date;
 
@@ -543,5 +543,15 @@ public class WeatherResponse implements Serializable {
 
         @SerializedName("desc")
         public String desc;
+    }
+    public DailyAstro getTodayAstro() {
+        if (result != null && result.daily != null && !result.daily.astro.isEmpty()) {
+            return result.daily.astro.get(0);
+        }
+        return null;
+    }
+
+    public Realtime getRealtime() {
+        return result != null ? result.realtime : null;
     }
 }

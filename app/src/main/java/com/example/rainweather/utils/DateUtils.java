@@ -54,6 +54,25 @@ public class DateUtils {
         }
         return dailyItems;
     }
+    public static String formatDatetomonthday(String isoDateTime){
+        if (TextUtils.isEmpty(isoDateTime)) return "";
+
+        try {
+            // 1. 解析原始 ISO 时间字符串
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmXXX");
+            var zonedDateTime = java.time.ZonedDateTime.parse(isoDateTime, formatter);
+            ZoneId beijing = ZoneId.of("Asia/Shanghai");
+            LocalDate targetDate = zonedDateTime.withZoneSameInstant(beijing).toLocalDate();
+//格式化为"月/日"
+            DateTimeFormatter monthDayFormatter = DateTimeFormatter.ofPattern("M/d");
+            String monthDayStr = targetDate.format(monthDayFormatter);
+
+            return monthDayStr; // 示例输出：2/20
+        } catch (Exception e) {
+            return isoDateTime.substring(0, 10).replace("-", "/");
+        }
+    }
+
 
     public static String formatDateForDisplay(String isoDateTime) {
         if (TextUtils.isEmpty(isoDateTime)) return "";
@@ -92,5 +111,22 @@ public class DateUtils {
             case "SUNDAY": return "周日";
             default: return englishDay;
         }
+    }
+
+
+    public static String extractHourFromIso8601(String isoTime) {
+        if (isoTime == null || isoTime.isEmpty()) return "--:--";
+        try {
+            // 找到 'T' 和 '+' 之间的部分
+            int tIndex = isoTime.indexOf('T');
+            int plusIndex = isoTime.indexOf('+', tIndex);
+            if (tIndex != -1 && plusIndex != -1) {
+                String timePart = isoTime.substring(tIndex + 1, plusIndex); // "15:00"
+                return timePart;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "--:--";
     }
 }

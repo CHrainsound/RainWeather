@@ -54,7 +54,6 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
         } else {
             // 如果已在播放，无需重复操作
             if (holder.animationView.isAnimating()) {
-                // 可选：保持播放
             } else {
                 holder.animationView.playAnimation();
             }

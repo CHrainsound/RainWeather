@@ -34,8 +34,10 @@ import android.widget.Toast;
 import com.example.rainweather.R;
 import com.example.rainweather.databinding.ActivityMainBinding;
 import com.example.rainweather.repository.model.DailyWeatherItem;
+import com.example.rainweather.repository.model.HourlyChartData;
 import com.example.rainweather.repository.model.WeatherResponse;
 import com.example.rainweather.utils.Resource;
+import com.example.rainweather.view.HourlyTemperatureChart;
 import com.example.rainweather.view.adapter.DailyWeatherAdapter;
 import com.example.rainweather.viewmodel.MainViewModel;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -60,10 +62,9 @@ public class MainActivity extends AppCompatActivity {
     private int currentVideoResId = -1;
 
     // UI
-    private TextView tvTemperature;
-    private TextView tvLocation;
-    private TextView tvWeatherDesc;
+    private TextView tvTemperature,tvWeatherDesc,tvLocation,tvKeyPoint;
     private MaterialButton mbtnAqi;
+    private HourlyTemperatureChart hourlyChart;
 
     // 适配器
     private final DailyWeatherAdapter dailyAdapter = new DailyWeatherAdapter(new ArrayList<>());
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         tvLocation = binding.tvLocation;
         tvWeatherDesc = binding.tvWeatherDesc;
         mbtnAqi = binding.btnAirQuality;
+        hourlyChart = binding.hourlyChart;
+        tvKeyPoint =binding.tvKeypoint;
 
         // RecyclerView
         binding.rvDailyForecast.setLayoutManager(new LinearLayoutManager(this));
@@ -175,6 +178,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.getHourlyChartData().observe(this, chartData -> {
+            if (chartData != null) {
+                hourlyChart.setData(chartData); // 传List
+            }
+        });
+
         // 观察城市名称
         viewModel.getLocationName().observe(this, cityName -> {
             if (cityName != null) {
@@ -229,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         // 更新 AQI
         updateAqiText(weather);
 
+
         // 更新描述
         String desc = dailyAdapter.skyconToChinese(skycon);
         if (weather.result.daily != null && !weather.result.daily.temperature.isEmpty()) {
@@ -237,6 +247,11 @@ public class MainActivity extends AppCompatActivity {
             desc += String.format(" 最高%.0f° 最低%.0f°", max, min);
         }
         tvWeatherDesc.setText(desc);
+        //更新折线图
+        List<HourlyChartData> chartData = HourlyChartData.fromWeatherResponse(weather);
+        String key = weather.result.hourly != null ? weather.result.hourly.description : "暂无预报";
+        tvKeyPoint.setText(key);
+
 
         // 切换视频
         setWeatherVideo(skycon, isNight);
@@ -292,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
             List<WeatherResponse.DailySkycon> skycons = weather.result.daily.skycon;
 
             if (temps != null && skycons != null) {
-                int count = Math.min(temps.size(), skycons.size());
+                int count = 3;
                 for (int i = 0; i < count; i++) {
                     String dateStr = temps.get(i).date;
                     String skyconValue = skycons.get(i).value;
@@ -302,6 +317,17 @@ public class MainActivity extends AppCompatActivity {
                     dailyItems.add(new DailyWeatherItem(displayDate, skyconValue, maxTemp, minTemp));
                 }
             }
+        }
+        else{
+            for (int i = 0; i < 3; i++) {
+                String dateStr = "N/A";
+                String skyconValue = "N/A";
+                double maxTemp = 0;
+                double minTemp = 0;
+                String displayDate = formatDateForDisplay(dateStr);
+                dailyItems.add(new DailyWeatherItem(displayDate, skyconValue, maxTemp, minTemp));
+            }
+
         }
         dailyAdapter.updateData(dailyItems);
     }
@@ -329,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
         Resource<WeatherResponse> resource = viewModel.getWeatherState().getValue();
         if (resource != null && resource.data != null) {
             Intent intent = new Intent(MainActivity.this, AirQualityActivity.class);
-            intent.putExtra("air_quality_data", resource.data.result.realtime.airQuality);
+            intent.putExtra("weather_response", resource.data);
             startActivity(intent);
         } else {
             Toast.makeText(this, "数据加载中...", Toast.LENGTH_SHORT).show();

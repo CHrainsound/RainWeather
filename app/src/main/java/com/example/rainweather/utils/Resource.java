@@ -1,12 +1,14 @@
 package com.example.rainweather.utils;
 
+import java.io.Serializable;
+
 /**
  * description ：资源封装类
  * toDo：封装网络请求或数据加载过程中的三种状态：加载中、成功、错误。
  * email : 3014386984@qq.com
  * date : 2/19 18:00
  */
-public class Resource<T> {
+public class Resource<T> implements Serializable {
     public enum Status { SUCCESS, ERROR, LOADING }
     public final Status status;
     public final T data;
