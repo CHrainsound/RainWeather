@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--24h 15day-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 选中状态-->
+    <item android:color="@color/airquality_card_background" android:state_checked="true" />
+    <!-- 未选中状态-->
+    <item android:color="@color/airquality_background" />
+
+</selector>

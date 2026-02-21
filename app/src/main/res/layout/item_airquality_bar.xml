@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp"
+    android:gravity="bottom|center_horizontal">
+    <TextView
+        android:id="@+id/tv_hour_aqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="34"
+        android:textColor="@color/good"
+        android:textSize="12sp"/>
+
+    <!-- 根据 AQI 动态设置高度-->
+    <View
+        android:id="@+id/view_aqi_bar"
+        android:layout_width="24dp"
+        android:layout_height="1dp"
+        android:background="@drawable/bg_aqi_bar_rounded" />
+
+
+    <!-- 时间标签 -->
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        android:fontFamily="sans-serif-medium"
+        tools:text="10:00" />
+
+</LinearLayout>
