@@ -29,7 +29,7 @@ public class LocationUtils {
         // 高德坐标顺序：经度,纬度
         String location = longitude + "," + latitude;
 
-        Call<MapResponse> call = service.getRegeo(ApiConstants.API_KEY, location);
+        Call<MapResponse> call = service.getRegeo(ApiConstants.API_KEY_MAP, location);
         call.enqueue(new Callback<MapResponse>() {
             @Override
             public void onResponse(Call<MapResponse> call, Response<MapResponse> response) {

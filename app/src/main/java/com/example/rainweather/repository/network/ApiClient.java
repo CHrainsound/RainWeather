@@ -21,7 +21,7 @@ public class ApiClient {
     public static CaiyunApiService getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(ApiConstants.BASE_URL)
+                    .baseUrl(ApiConstants.BASE_URL_CaiYun)
                     .addConverterFactory(GsonConverterFactory.create()) // 需要添加 Gson 依赖
                     .build();
         }

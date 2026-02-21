@@ -8,7 +8,6 @@ package com.example.rainweather.repository;
  */
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,12 +16,9 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.example.rainweather.repository.model.MapResponse;
 import com.example.rainweather.repository.model.WeatherResponse;
 import com.example.rainweather.repository.network.ApiClient;
 import com.example.rainweather.repository.network.CaiyunApiService;
@@ -32,10 +28,8 @@ import com.example.rainweather.utils.ApiConstants;
 import com.example.rainweather.utils.LocationUtils;
 import com.example.rainweather.utils.Resource;
 import com.google.gson.Gson;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -175,7 +169,7 @@ public class WeatherRepository {
      */
     private void fetchWeatherFromNetwork(MutableLiveData<Resource<WeatherResponse>> result, String locationStr, String cityName) {
         Call<WeatherResponse> call = apiService.getWeather(
-                ApiConstants.API_TOKEN,
+                ApiConstants.API_TOKEN_CaiYun,
                 locationStr,
                 24, 15, true
         );
@@ -247,39 +241,6 @@ public class WeatherRepository {
         } finally {
             locationManager.removeUpdates(listener);
         }
-    }
-    private String parseCityNameFromAMap(double longitude, double latitude) {
-        // 拼接经纬度
-        String location = longitude + "," + latitude;
-
-        // 构建请求
-        Call<MapResponse> call = mapService.getRegeo(
-                ApiConstants.API_KEY, // 这里填入你申请的高德 KEY
-                location
-        );
-
-        try {
-            Response<MapResponse> response = call.execute();
-            if (response.isSuccessful() && response.body() != null) {
-                MapResponse mapResponse = response.body();
-                if ("1".equals(mapResponse.status) && mapResponse.regeocode != null) {
-                    // 尝试获取城区名 (如：丰满区)，如果为空则获取城市名 (如：吉林市)
-                    String town = mapResponse.regeocode.addressComponent.township;
-                    String district = mapResponse.regeocode.addressComponent.district;
-                    String city = mapResponse.regeocode.addressComponent.city;
-
-                    // 优先显示区，如果没有区则显示市
-                    if (district != null && !district.isEmpty()) {
-                        return district+="  "+town;
-                    } else if (city != null && !city.isEmpty()) {
-                        return city;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     // --- 缓存辅助方法 ---
