@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     // UI
     private TextView tvTemperature,tvWeatherDesc,tvLocation,tvKeyPoint;
-    private MaterialButton mbtnAqi;
+    private MaterialButton mbtnAqi,mbtnMore;
     private HourlyTemperatureChart hourlyChart;
 
     // 适配器
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
-            // 可选：让内容延伸到状态栏区域（配合 fitsSystemWindows 使用）
+            // 让内容延伸到状态栏区域（配合 fitsSystemWindows 使用）
             View decorView = window.getDecorView();
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         mbtnAqi = binding.btnAirQuality;
         hourlyChart = binding.hourlyChart;
         tvKeyPoint =binding.tvKeypoint;
+        mbtnMore =binding.btnMore;
 
         // RecyclerView
         binding.rvDailyForecast.setLayoutManager(new LinearLayoutManager(this));
@@ -138,6 +139,15 @@ public class MainActivity extends AppCompatActivity {
     private void setupListeners() {
         // 空气质量点击
         mbtnAqi.setOnClickListener(v -> navigateToAirQuality());
+
+        //more点击
+        mbtnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 下拉刷新
         binding.swipeRefreshMain.setOnRefreshListener(() -> viewModel.refreshWeather());
@@ -278,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (weather.result.realtime.airQuality != null) {
                 if (weather.result.realtime.airQuality.description != null) {
-                    if(weather.result.realtime.airQuality.description.equals("优")||weather.result.realtime.airQuality.description.equals("良"))
+                    if(weather.result.realtime.airQuality.description.chn.equals("优")||weather.result.realtime.airQuality.description.chn.equals("良"))
                         aqiText.append("空气");
                     aqiText.append(weather.result.realtime.airQuality.description.chn).append(" ");
                 }
