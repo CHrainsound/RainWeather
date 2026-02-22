@@ -54,6 +54,23 @@ public class DateUtils {
         }
         return dailyItems;
     }
+    public static long parseISO8601ToMillis(String iso8601) {
+        try {
+            // ISO8601 示例: "2025-02-21T14:00+08:00"
+            java.time.OffsetDateTime odt = java.time.OffsetDateTime.parse(iso8601);
+            return odt.toInstant().toEpochMilli();
+        } catch (Exception e) {
+            // 兼容旧 Android（< API 26）
+            try {
+                // 手动处理 "+08:00" → "+0800"
+                String fixed = iso8601.replaceAll(":(\\d{2})$", "$1");
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ", java.util.Locale.getDefault());
+                return sdf.parse(fixed).getTime();
+            } catch (Exception ex) {
+                return System.currentTimeMillis(); // fallback
+            }
+        }
+    }
     public static String formatDatetomonthday(String isoDateTime){
         if (TextUtils.isEmpty(isoDateTime)) return "";
 

@@ -5,6 +5,8 @@ package com.example.rainweather.repository.model;
  * date : 2/21 12:00
  */
 
+import static com.example.rainweather.utils.DateUtils.parseISO8601ToMillis;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +16,8 @@ import java.util.List;
  * 用于 HourlyTemperatureChart 的简化数据模型
  */
 public class HourlyChartData {
-    public String time; // 格式: "14:00"（用于 X 轴定位）
+    public String displayTime;     // 仅用于显示，如 "14:00"
+    public long timestamp;
     public float temperature;
     public String skycon; // 如 "CLEAR_DAY"
     public String windSpeed; // 格式: "3级"
@@ -24,12 +27,14 @@ public class HourlyChartData {
     public String sunEventType; // "sunrise" or "sunset"
     public String sunEventTime; // 真实日出/日落时间，如 "06:48"
 
-    public HourlyChartData(String time, float temperature, String skycon, String windSpeed) {
-        this.time = time;
+    public HourlyChartData(long timestamp, float temperature, String skycon, String windSpeed) {
+        this.timestamp = timestamp;
         this.temperature = temperature;
         this.skycon = skycon;
         this.windSpeed = windSpeed;
         this.isNow = false;
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+        this.displayTime = sdf.format(new java.util.Date(timestamp));
     }
 
     // === 静态工具方法 ===
@@ -99,52 +104,54 @@ public class HourlyChartData {
 
         for (int i = 0; i < size; i++) {
             String datetime = temps.get(i).datetime;
-            String time = extractTimeFromISO8601(datetime);
+            long timestamp = parseISO8601ToMillis(datetime);
             float temp = (float) temps.get(i).value;
             String skycon = skycons.get(i).value;
             String windSpeed = formatWindSpeed((float) winds.get(i).speed);
 
-            list.add(new HourlyChartData(time, temp, skycon, windSpeed));
+            list.add(new HourlyChartData(timestamp, temp, skycon, windSpeed));
         }
 
         if (!list.isEmpty()) {
             list.get(0).isNow = true;
         }
 
-        // 2. 注入日出/日落事件（关键修复：插入到正确位置）
+        // === 处理日出/日落（也转为时间戳）===
         WeatherResponse.DailyAstro todayAstro = response.getTodayAstro();
         if (todayAstro != null) {
+            long now = System.currentTimeMillis();
+            java.util.TimeZone tz = java.util.TimeZone.getDefault();
+
             // 日出
             if (todayAstro.sunrise != null && todayAstro.sunrise.time != null) {
-                String realTime = todayAstro.sunrise.time;
-                String chartTime = roundToNearestHour(realTime); // 对齐到整点
-                HourlyChartData sunrise = new HourlyChartData(chartTime, 0, "", "");
-                sunrise.isSunEvent = true;
-                sunrise.sunEventType = "sunrise";
-                sunrise.sunEventTime = realTime;
-                list.add(sunrise);
+                long sunriseTimestamp = parseSunEventToTimestamp(todayAstro.sunrise.time, now, tz);
+                if (sunriseTimestamp > 0) {
+                    // 找最接近的时间点温度（按 timestamp）
+                    float temp = findNearestTemperatureByTimestamp(list, sunriseTimestamp);
+                    HourlyChartData sunrise = new HourlyChartData(sunriseTimestamp, temp, "", "");
+                    sunrise.isSunEvent = true;
+                    sunrise.sunEventType = "sunrise";
+                    sunrise.sunEventTime = todayAstro.sunrise.time;
+                    list.add(sunrise);
+                }
             }
+
             // 日落
             if (todayAstro.sunset != null && todayAstro.sunset.time != null) {
-                String realTime = todayAstro.sunset.time;
-                String chartTime = roundToNearestHour(realTime);
-                HourlyChartData sunset = new HourlyChartData(chartTime, 0, "", "");
-                sunset.isSunEvent = true;
-                sunset.sunEventType = "sunset";
-                sunset.sunEventTime = realTime;
-                list.add(sunset);
+                long sunsetTimestamp = parseSunEventToTimestamp(todayAstro.sunset.time, now, tz);
+                if (sunsetTimestamp > 0) {
+                    float temp = findNearestTemperatureByTimestamp(list, sunsetTimestamp);
+                    HourlyChartData sunset = new HourlyChartData(sunsetTimestamp, temp, "", "");
+                    sunset.isSunEvent = true;
+                    sunset.sunEventType = "sunset";
+                    sunset.sunEventTime = todayAstro.sunset.time;
+                    list.add(sunset);
+                }
             }
         }
 
         // 3. 按时间排序（确保 sunrise/sunset 插入到正确位置）
-        Collections.sort(list, new Comparator<HourlyChartData>() {
-            @Override
-            public int compare(HourlyChartData a, HourlyChartData b) {
-                String timeA = a.isSunEvent ? a.time : a.time;
-                String timeB = b.isSunEvent ? b.time : b.time;
-                return timeToMinutes(timeA) - timeToMinutes(timeB);
-            }
-        });
+        Collections.sort(list, (a, b) -> Long.compare(a.timestamp, b.timestamp));
 
         return list;
     }
@@ -158,5 +165,58 @@ public class HourlyChartData {
         } catch (Exception e) {
             return 0;
         }
+    }
+    // 将 "06:48" 转为今天或明天的时间戳
+    private static long parseSunEventToTimestamp(String sunTime, long now, java.util.TimeZone tz) {
+        try {
+            String[] parts = sunTime.split(":");
+            int hour = Integer.parseInt(parts[0]);
+            int minute = Integer.parseInt(parts[1]);
+
+            java.util.Calendar cal = java.util.Calendar.getInstance(tz);
+            cal.setTimeInMillis(now);
+            cal.set(java.util.Calendar.HOUR_OF_DAY, hour);
+            cal.set(java.util.Calendar.MINUTE, minute);
+            cal.set(java.util.Calendar.SECOND, 0);
+            cal.set(java.util.Calendar.MILLISECOND, 0);
+
+            long candidate = cal.getTimeInMillis();
+            // 如果日出时间已过（比如现在 10:00，日出 06:48），则加一天
+            if (candidate < now) {
+                candidate += 24 * 60 * 60 * 1000L;
+            }
+            return candidate;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    private static float findNearestTemperatureByTimestamp(List<HourlyChartData> list, long targetTs) {
+        if (list.isEmpty()) return 0f;
+        HourlyChartData closest = list.get(0);
+        long minDiff = Math.abs(closest.timestamp - targetTs);
+        for (HourlyChartData item : list) {
+            long diff = Math.abs(item.timestamp - targetTs);
+            if (diff < minDiff) {
+                minDiff = diff;
+                closest = item;
+            }
+        }
+        return closest.temperature;
+    }
+    private static Float findNearestTemperature(java.util.Map<String, Float> timeToTemp, String targetTime) {
+        int targetMinutes = timeToMinutes(targetTime);
+        int minDiff = Integer.MAX_VALUE;
+        Float bestTemp = null;
+
+        for (java.util.Map.Entry<String, Float> entry : timeToTemp.entrySet()) {
+            int minutes = timeToMinutes(entry.getKey());
+            int diff = Math.abs(minutes - targetMinutes);
+            if (diff < minDiff) {
+                minDiff = diff;
+                bestTemp = entry.getValue();
+            }
+        }
+        return bestTemp;
     }
 }

@@ -274,10 +274,12 @@ public class MainActivity extends AppCompatActivity {
      * 更新 AQI 文本
      */
     private void updateAqiText(WeatherResponse weather) {
-        StringBuilder aqiText = new StringBuilder("空气");
+        StringBuilder aqiText = new StringBuilder("");
         try {
             if (weather.result.realtime.airQuality != null) {
                 if (weather.result.realtime.airQuality.description != null) {
+                    if(weather.result.realtime.airQuality.description.equals("优")||weather.result.realtime.airQuality.description.equals("良"))
+                        aqiText.append("空气");
                     aqiText.append(weather.result.realtime.airQuality.description.chn).append(" ");
                 }
                 if (weather.result.realtime.airQuality.aqi != null) {

@@ -173,7 +173,7 @@ public class HourlyTemperatureChart extends View {
         // 时间：如果是日出/日落，显示精确时间（如 06:48），否则显示原始时间（如 06:00）
         String displayTime = data.isSunEvent && data.sunEventTime != null
                 ? data.sunEventTime
-                : data.time;
+                : data.displayTime;
         canvas.drawText(displayTime, x, y - mTextPaint.getTextSize() * 0.8f, mTextPaint);
 
         // 天气图标
