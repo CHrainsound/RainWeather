@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="34"
-        android:textColor="@color/good"
+        android:textColor="@color/aqi_good"
         android:textSize="12sp"/>
 
     <!-- 根据 AQI 动态设置高度-->

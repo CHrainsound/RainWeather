@@ -22,38 +22,11 @@ import java.util.List;
 
 public class DateUtils {
 
-    public static boolean isNight(WeatherResponse weather) {
-        try {
-            String sunsetTimeStr = weather.result.daily.astro.get(0).sunset.time;
-            LocalTime sunsetTime = LocalTime.parse(sunsetTimeStr, DateTimeFormatter.ofPattern("HH:mm"));
-            LocalTime now = LocalTime.now(ZoneId.of("Asia/Shanghai"));
-            return now.isAfter(sunsetTime);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static List<DailyWeatherItem> buildDailyItems(WeatherResponse weather, Context context) {
-        List<DailyWeatherItem> dailyItems = new ArrayList<>();
-        if (weather.result.daily != null) {
-            List<WeatherResponse.DailyTemp> temps = weather.result.daily.temperature;
-            List<WeatherResponse.DailySkycon> skycons = weather.result.daily.skycon;
-
-            if (temps != null && skycons != null) {
-                int count = Math.min(temps.size(), skycons.size());
-                for (int i = 0; i < count; i++) {
-                    String dateStr = temps.get(i).date;
-                    String skyconValue = skycons.get(i).value;
-                    double maxTemp = temps.get(i).max;
-                    double minTemp = temps.get(i).min;
-
-                    String displayDate = formatDateForDisplay(dateStr);
-                    dailyItems.add(new DailyWeatherItem(displayDate, skyconValue, maxTemp, minTemp));
-                }
-            }
-        }
-        return dailyItems;
-    }
+    /**
+     *将iso0861转化为时间戳
+     * @param iso8601
+     * @return
+     */
     public static long parseISO8601ToMillis(String iso8601) {
         try {
             // ISO8601 示例: "2025-02-21T14:00+08:00"
@@ -71,6 +44,12 @@ public class DateUtils {
             }
         }
     }
+
+    /**
+     * 将iso0861转化为月/日
+     * @param isoDateTime
+     * @return
+     */
     public static String formatDatetomonthday(String isoDateTime){
         if (TextUtils.isEmpty(isoDateTime)) return "";
 
@@ -80,17 +59,19 @@ public class DateUtils {
             var zonedDateTime = java.time.ZonedDateTime.parse(isoDateTime, formatter);
             ZoneId beijing = ZoneId.of("Asia/Shanghai");
             LocalDate targetDate = zonedDateTime.withZoneSameInstant(beijing).toLocalDate();
-//格式化为"月/日"
             DateTimeFormatter monthDayFormatter = DateTimeFormatter.ofPattern("M/d");
             String monthDayStr = targetDate.format(monthDayFormatter);
-
-            return monthDayStr; // 示例输出：2/20
+            return monthDayStr; // 示例2/20
         } catch (Exception e) {
             return isoDateTime.substring(0, 10).replace("-", "/");
         }
     }
 
-
+    /**
+     * 将iso0861转化为对应的今天、明天和星期
+     * @param isoDateTime
+     * @return
+     */
     public static String formatDateForDisplay(String isoDateTime) {
         if (TextUtils.isEmpty(isoDateTime)) return "";
 
@@ -117,6 +98,11 @@ public class DateUtils {
         }
     }
 
+    /**
+     * 英文转化为中文
+     * @param englishDay
+     * @return
+     */
     private static String getChineseDayOfWeek(String englishDay) {
         switch (englishDay) {
             case "MONDAY": return "周一";
@@ -130,7 +116,11 @@ public class DateUtils {
         }
     }
 
-
+    /**
+     * iso0861转化为 时:分钟
+     * @param isoTime
+     * @return
+     */
     public static String extractHourFromIso8601(String isoTime) {
         if (isoTime == null || isoTime.isEmpty()) return "--:--";
         try {

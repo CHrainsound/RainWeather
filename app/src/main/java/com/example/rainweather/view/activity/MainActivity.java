@@ -32,6 +32,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.rainweather.databinding.ActivityMainBinding;
 import com.example.rainweather.repository.model.DailyWeatherItem;
 import com.example.rainweather.repository.model.HourlyChartData;
@@ -43,6 +44,7 @@ import com.example.rainweather.viewmodel.MainViewModel;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.material.button.MaterialButton;
+
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -60,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private int currentVideoResId = -1;
 
     // UI
-    private TextView tvTemperature,tvWeatherDesc,tvLocation,tvKeyPoint;
-    private MaterialButton mbtnAqi,mbtnMore;
+    private TextView tvTemperature, tvWeatherDesc, tvLocation, tvKeyPoint, tvRain,tvRainTitle, tvCarWashing, tvUltraviolet, tvAPTemperature, tvAPTemperaturedesc, tvPressure, tvhumidity;
+    private MaterialButton mbtnAqi, mbtnMore;
     private HourlyTemperatureChart hourlyChart;
 
     // 适配器
@@ -74,18 +76,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            // 让内容延伸到状态栏区域（配合 fitsSystemWindows 使用）
-            View decorView = window.getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            );
-        }
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        // 让内容延伸到状态栏区域（配合 fitsSystemWindows 使用）
+        View decorView = window.getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
         setContentView(binding.getRoot());
 
         // 初始化 ViewModel
@@ -117,8 +117,16 @@ public class MainActivity extends AppCompatActivity {
         tvWeatherDesc = binding.tvWeatherDesc;
         mbtnAqi = binding.btnAirQuality;
         hourlyChart = binding.hourlyChart;
-        tvKeyPoint =binding.tvKeypoint;
-        mbtnMore =binding.btnMore;
+        tvKeyPoint = binding.tvKeypoint;
+        mbtnMore = binding.btnMore;
+        tvRain = binding.tvRain;
+        tvUltraviolet = binding.tvUltraviole;
+        tvAPTemperature =binding.tvApparentTemperature;
+        tvAPTemperaturedesc =binding.tvApparentTemperatureDesc;
+        tvhumidity = binding.tvHumidity;
+        tvPressure = binding.tvPressure;
+        tvCarWashing = binding.tvCarWashing;
+        tvRainTitle = binding.tvRainTitle;
 
         // RecyclerView
         binding.rvDailyForecast.setLayoutManager(new LinearLayoutManager(this));
@@ -144,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         mbtnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
             }
         });
@@ -278,6 +286,27 @@ public class MainActivity extends AppCompatActivity {
 
         // 更新列表
         updateDailyForecast(weather);
+
+        //更新卡片组
+        tvUltraviolet.setText(weather.result.realtime.lifeIndex.ultraviolet.desc);
+        tvAPTemperature.setText((weather.result.realtime.apparentTemperature)+" ℃");
+        tvAPTemperaturedesc.setText(weather.result.realtime.lifeIndex.comfort.desc);
+        tvhumidity.setText((int) (weather.result.realtime.humidity*100)+" %");
+        tvPressure.setText((int)(weather.result.realtime.pressure)/100+" hPa");
+        tvCarWashing.setText(weather.result.daily.lifeIndex.carWashing.get(0).desc);
+
+        if(weather.result.realtime.precipitation.local.intensity>0){
+            tvRainTitle.setText("当前降雨量");
+            tvRain.setText(weather.result.realtime.precipitation.local.intensity+" mm/hr");
+        }else if(weather.result.realtime.precipitation.nearest.intensity>0){
+            tvRainTitle.setText("降水预报");
+            tvRain.setText("最近降水带距离 "+weather.result.realtime.precipitation.nearest.distance+" km");
+        }else{
+            tvRainTitle.setText("降水预报");
+            tvRain.setText("放心吧，短期不会降雨");
+
+        }
+
     }
 
     /**
@@ -288,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (weather.result.realtime.airQuality != null) {
                 if (weather.result.realtime.airQuality.description != null) {
-                    if(weather.result.realtime.airQuality.description.chn.equals("优")||weather.result.realtime.airQuality.description.chn.equals("良"))
+                    if (weather.result.realtime.airQuality.description.chn.equals("优") || weather.result.realtime.airQuality.description.chn.equals("良"))
                         aqiText.append("空气");
                     aqiText.append(weather.result.realtime.airQuality.description.chn).append(" ");
                 }
@@ -339,8 +368,7 @@ public class MainActivity extends AppCompatActivity {
                     dailyItems.add(new DailyWeatherItem(displayDate, skyconValue, maxTemp, minTemp));
                 }
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < 3; i++) {
                 String dateStr = "N/A";
                 String skyconValue = "N/A";
@@ -383,6 +411,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "数据加载中...", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     @Override
     protected void onResume() {

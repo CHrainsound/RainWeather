@@ -96,7 +96,7 @@ public class MainViewModel extends AndroidViewModel {
 
     }
 
-    // --- 暴露给 Activity 观察 ---
+    // 给Activity观察
 
     public LiveData<Resource<WeatherResponse>> getWeatherState() {
         return weatherState;

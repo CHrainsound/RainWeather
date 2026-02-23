@@ -5,6 +5,7 @@ package com.example.rainweather.view;
  * email : 3014386984@qq.com
  * date : 2/21 10:00
  */
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,15 +16,18 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.OverScroller;
+
 import androidx.annotation.Nullable;
+
 import com.example.rainweather.R;
 import com.example.rainweather.repository.model.HourlyChartData;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HourlyTemperatureChart extends View {
     private OverScroller mScroller;
-    private static final int PADDING_LEFT_RIGHT =90;
+    private static final int PADDING_LEFT_RIGHT = 90;
     private final Paint mSunPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private List<HourlyChartData> mData;
@@ -52,7 +56,6 @@ public class HourlyTemperatureChart extends View {
     }
 
     private void init() {
-        // 从主题或资源中获取颜色，这里先写死
         mLineColor = Color.parseColor("#81D8D0");
         mTextColor = Color.WHITE;
         mNowPointColor = Color.YELLOW;
@@ -158,7 +161,7 @@ public class HourlyTemperatureChart extends View {
         }
         canvas.drawPath(path, mLinePaint);
 
-// 再遍历所有数据，统一画底部信息（包括太阳事件）
+        //遍历所有数据，统一画底部信息
         for (int i = 0; i < mData.size(); i++) {
             HourlyChartData data = mData.get(i);
             float x = PADDING_LEFT_RIGHT + i * mItemWidth + mTranslateX;

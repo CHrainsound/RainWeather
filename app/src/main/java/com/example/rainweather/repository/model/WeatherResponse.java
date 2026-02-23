@@ -12,22 +12,22 @@ import java.util.List;
 public class WeatherResponse implements Serializable {
 
     @SerializedName("status")
-    public String status; // "ok" 表示成功
+    public String status;
 
     @SerializedName("api_version")
     public String apiVersion;
 
     @SerializedName("api_status")
-    public String apiStatus; // "active" 表示服务正常
+    public String apiStatus;
 
     @SerializedName("lang")
-    public String lang; // 语言，如 "zh_CN"
+    public String lang;
 
     @SerializedName("unit")
     public String unit; // 单位制，"metric" 为公制
 
     @SerializedName("tzshift")
-    public int tzShift; // 时区偏移（秒），+28800 = UTC+8
+    public int tzShift;
 
     @SerializedName("timezone")
     public String timezone; // 时区 ID，如 "Asia/Shanghai"
@@ -42,7 +42,7 @@ public class WeatherResponse implements Serializable {
     public Result result;
 
     @SerializedName("primary")
-    public int primary; // 主要天气现象编码（0=晴/少云, 3=雨, 4=雪等）
+    public int primary; // 主要天气现象编码
 
     @SerializedName("forecast_keypoint")
     public String forecastKeypoint; // 预报关键描述，如 "多云，今天夜里23点后转阴..."
@@ -133,7 +133,7 @@ public class WeatherResponse implements Serializable {
         public String datasource; // 数据源，如 "radar"
 
         @SerializedName("intensity")
-        public double intensity; // 降水强度（mm/h）
+        public double intensity; // 降水强度（mm/hr）
     }
 
     public static class NearestPrecip implements Serializable{
@@ -187,7 +187,7 @@ public class WeatherResponse implements Serializable {
         public String chn; // 如 "优"
 
         @SerializedName("usa")
-        public String usa; // 如 "良"
+        public String usa;
     }
 
     public static class LifeIndex implements Serializable{

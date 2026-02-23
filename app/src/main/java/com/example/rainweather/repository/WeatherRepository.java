@@ -171,7 +171,7 @@ public class WeatherRepository {
         Call<WeatherResponse> call = apiService.getWeather(
                 ApiConstants.API_TOKEN_CaiYun,
                 locationStr,
-                24, 15, true
+                24, 15, "metric:v2"
         );
 
         call.enqueue(new Callback<WeatherResponse>() {

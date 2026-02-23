@@ -23,38 +23,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="110dp">
+                android:layout_marginTop="110dp"
+                android:orientation="horizontal">
 
-            <!-- 位置信息 -->
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:text="南岗区 南昌路"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                tools:text="南岗区 南昌路" />
+                <!-- 位置信息 -->
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="南岗区 南昌路"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    tools:text="南岗区 南昌路" />
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_more"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:backgroundTint="#00FFFFFF"
                     android:layout_marginEnd="18dp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:contentDescription="关于"
+                    app:icon="@drawable/moreicon"
                     app:iconGravity="textStart"
                     app:iconSize="30dp"
-                    app:icon="@drawable/moreicon"
-                    app:iconTint="@color/white"/>
+                    app:iconTint="@color/white"
+                    tools:ignore="TouchTargetSizeCheck" />
 
 
             </LinearLayout>
@@ -90,7 +94,6 @@
                         android:text="-4°"
                         android:textColor="#FFFFFF"
                         android:textSize="120sp"
-
                         app:layout_constraintStart_toStartOf="@+id/gl_left"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="-4°" />
@@ -130,6 +133,7 @@
                         app:layout_constraintStart_toStartOf="@id/gl_left"
                         app:layout_constraintTop_toBottomOf="@+id/tv_weather_desc"
                         app:strokeWidth="0dp"
+                        tools:ignore="TouchTargetSizeCheck"
                         tools:text="空气优 34" />
 
                     <!-- 多日预报卡片 -->
@@ -137,8 +141,8 @@
                         android:id="@+id/cv_daily_forecast"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="80dp"
                         android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="80dp"
                         app:cardBackgroundColor="#25000000"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="0dp"
@@ -167,6 +171,7 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
+                    <!--24h折线图-->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_weather_hour"
                         android:layout_width="0dp"
@@ -177,10 +182,9 @@
                         app:cardBackgroundColor="#25000000"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHeight_min="180dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cv_daily_forecast">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -191,25 +195,388 @@
                                 android:id="@+id/tv_keypoint"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
                                 android:text="未来24小时多云"
                                 android:textColor="@color/white"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"/>
+                                app:layout_constraintTop_toTopOf="parent" />
+
                             <com.example.rainweather.view.HourlyTemperatureChart
-                                app:layout_constraintTop_toBottomOf="@id/tv_keypoint"
                                 android:id="@+id/hourlyChart"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="16dp"
                                 android:paddingHorizontal="20dp"
-                                android:paddingVertical="10dp"/>
+                                android:paddingVertical="10dp"
+                                app:layout_constraintTop_toBottomOf="@id/tv_keypoint" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     </androidx.cardview.widget.CardView>
+                    <!--卡片组-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cv_weather_hour">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="7dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="#25000000"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="0dp">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_rainTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="降水预报"
+                                        android:textColor="@color/button_tint"
+                                        android:textSize="12sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/tv_rain"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="最近降水带距离10km"
+                                        android:textColor="@color/white"
+                                        android:textSize="15sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_rainTitle" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="#25000000"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="0dp">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_ultravioleTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="紫外线"
+                                        android:textColor="@color/button_tint"
+                                        android:textSize="12sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/tv_ultraviole"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="很弱"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_ultravioleTitle" />
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="15dp"
+                                        android:src="@drawable/ic_ultraviolet"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:tint="@color/button_tint" />
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="7dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="#25000000"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="0dp">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_apparent_temperatureTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="体感气温"
+                                        android:textColor="@color/button_tint"
+                                        android:textSize="12sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/tv_apparent_temperature"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="-10℃"
+                                        android:textColor="@color/white"
+                                        android:textSize="17sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_apparent_temperatureTitle" />
+
+                                    <ImageView
+                                        android:id="@+id/tv_apparent_temperatureicon"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="20dp"
+                                        android:src="@drawable/ic_apparent_temperature"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:tint="@color/button_tint" />
+
+                                    <TextView
+                                        android:id="@+id/tv_apparent_temperatureDesc"
+                                        android:layout_width="49dp"
+                                        android:layout_height="35dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginTop="5dp"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        android:text="刺骨的冷"
+                                        android:textColor="@color/button_tint"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="#25000000"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="0dp">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_humidityTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="湿度"
+                                        android:textColor="@color/button_tint"
+                                        android:textSize="12sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/tv_humidity"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="60%"
+                                        android:textColor="@color/white"
+                                        android:textSize="17sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_humidityTitle" />
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="15dp"
+                                        android:src="@drawable/ic_humidity"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:tint="@color/button_tint" />
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="7dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="#25000000"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="0dp">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_pressureTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="气压"
+                                        android:textColor="@color/button_tint"
+                                        android:textSize="12sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/tv_pressure"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="1004hPa"
+                                        android:textColor="@color/white"
+                                        android:textSize="17sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_pressureTitle" />
+
+                                    <ImageView
+                                        android:id="@+id/tv_pressureicon"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="15dp"
+                                        android:src="@drawable/ic_pressure"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:tint="@color/button_tint" />
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="70dp"
+                                android:layout_marginStart="7dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="#25000000"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="0dp">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_carWashingTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="洗车指数"
+                                        android:textColor="@color/button_tint"
+                                        android:textSize="12sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/tv_carWashing"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginHorizontal="10dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="适宜"
+                                        android:textColor="@color/white"
+                                        android:textSize="17sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_carWashingTitle" />
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_marginHorizontal="15dp"
+                                        android:layout_marginVertical="15dp"
+                                        android:src="@drawable/ic_carwashing"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:tint="@color/button_tint" />
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.example.rainweather.view.HorizontalScrollFriendlyScrollView>

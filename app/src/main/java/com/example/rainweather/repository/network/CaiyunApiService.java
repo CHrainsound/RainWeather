@@ -11,12 +11,13 @@ import retrofit2.http.Query;
  * date : 2/8 14:00
  */
 public interface CaiyunApiService {
+    String  unit="metric:v2";
     @GET("v2.6/{token}/{location}/weather")
     Call<WeatherResponse> getWeather(
             @Path(value = "token",encoded = true) String token,
             @Path(value = "location",encoded = true) String location, // 格式: 经度,纬度
             @Query("hourlysteps") int hourlySteps,
             @Query("dailysteps") int dailySteps,
-            @Query("alert") boolean alert
+            @Query("unit") String  unit
     );
 }

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +27,9 @@ public class AirQualityBarAdapter extends RecyclerView.Adapter<AirQualityBarAdap
     private List<AirQualityItem> dataList = new ArrayList<>();
     private Context context;
 
-    // 最大柱状图高度（dp），根据你的 item 高度 140dp 减去文本空间后设定
+    // 最大柱状图高度（dp）
     private static final int MAX_BAR_HEIGHT_DP = 110;
+
     public AirQualityBarAdapter(Context context) {
         this.context = context;
     }
@@ -52,7 +54,7 @@ public class AirQualityBarAdapter extends RecyclerView.Adapter<AirQualityBarAdap
 
         // 2. 计算柱状图高度（像素）
         int maxBarHeightPx = (int) (MAX_BAR_HEIGHT_DP * context.getResources().getDisplayMetrics().density);
-        int calculatedHeight = (int) ((Math.min(item.getAqi(),500) / 500.0f) * maxBarHeightPx);
+        int calculatedHeight = (int) ((Math.min(item.getAqi(), 500) / 500.0f) * maxBarHeightPx);
         int height = Math.max(calculatedHeight, 1); // 至少 3px
 
         // 动态设置 View 高度
@@ -61,23 +63,23 @@ public class AirQualityBarAdapter extends RecyclerView.Adapter<AirQualityBarAdap
         holder.viewAqiBar.setLayoutParams(params);
         holder.viewAqiBar.requestLayout();
 
-        // 3. 根据 AQI 设置颜色（可选，增强可视化）
+        // 根据AQI设置颜色
         int color;
         if (item.getAqi() <= 50) {
-            color = ContextCompat.getColor(context, R.color.good);
+            color = ContextCompat.getColor(context, R.color.aqi_good);
         } else if (item.getAqi() <= 100) {
-            color = ContextCompat.getColor(context, R.color.moderate);
-        } else if(item.getAqi()<=150){
-            color = ContextCompat.getColor(context, R.color.light_polution);
-        }else{
-            color = ContextCompat.getColor(context,R.color.aqi_hazardous);
+            color = ContextCompat.getColor(context, R.color.aqi_moderate);
+        } else if (item.getAqi() <= 150) {
+            color = ContextCompat.getColor(context, R.color.aqi_unhealthy_for_sensitive);
+        } else {
+            color = ContextCompat.getColor(context, R.color.aqi_hazardous);
         }
         GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.bg_aqi_bar_rounded).mutate();
 
-// 2. 动态设置颜色（保留圆角）
+        //动态设置颜色（保留圆角）
         drawable.setColor(color);
 
-// 3. 应用到 View
+        //应用到 View
         holder.viewAqiBar.setBackground(drawable);
         holder.tvAqi.setTextColor(color);
     }
@@ -87,17 +89,17 @@ public class AirQualityBarAdapter extends RecyclerView.Adapter<AirQualityBarAdap
         return dataList.size();
     }
 
-    // 外部调用：更新数据
-    public  void submitData(List<AirQualityItem> newData) {
+    // 外部更新数据
+    public void submitData(List<AirQualityItem> newData) {
         this.dataList.clear();
         this.dataList.addAll(newData);
         notifyDataSetChanged();
     }
 
-    // ViewHolder 内部类
+    // ViewHolder内部类
     static class BarViewHolder extends RecyclerView.ViewHolder {
         View viewAqiBar;
-        TextView tvTime,tvAqi;
+        TextView tvTime, tvAqi;
 
         public BarViewHolder(@NonNull View itemView) {
             super(itemView);

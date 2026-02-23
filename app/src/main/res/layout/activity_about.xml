@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/airquality_background">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="60dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="18dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="100dp" />
+
+
+    <ImageButton
+        android:id="@+id/btn_return_about"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@null"
+        android:contentDescription="返回"
+        android:scaleType="centerCrop"
+        android:src="@drawable/backicon"
+        app:layout_constraintStart_toStartOf="@id/gl_left"
+        app:layout_constraintTop_toTopOf="@id/gl_top"
+        app:tint="@color/airquality_return_background"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/tv_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="关于"
+        android:textColor="@color/airquality_return_background"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="@id/gl_left"
+        app:layout_constraintTop_toTopOf="@id/gl_main" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/tv_about">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_about_appicon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher_foreground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/RoundedCornerStyle" />
+
+
+            <TextView
+                android:id="@+id/tv_about_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="雨声天气"
+                android:textColor="@color/airquality_return_background"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_about_appicon" />
+
+            <TextView
+                android:id="@+id/tv_about_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version:  0.9.1"
+                android:textColor="@color/airquality_return_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_about_name">
+
+            </TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="40dp"
+                app:cardBackgroundColor="@color/airquality_card_background"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_about_version">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Powered by 彩云天气"
+                        android:textColor="@color/airquality_return_background"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginVertical="8dp"
+                        android:text="Github:\nhttps://github.com/CHrainsound/RainWeather"
+                        android:textColor="@color/airquality_return_background"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                    </TextView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

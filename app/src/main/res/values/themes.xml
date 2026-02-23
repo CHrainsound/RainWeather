@@ -4,10 +4,6 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-    <style name="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="backgroundTint">@color/button_tint</item>
-        <item name="strokeWidth">1dp</item>
-    </style>
     <color name="airquality_return_background">#000000</color>
     <color name="airquality_background">#F5F5F5</color>
     <color name="airquality_card_background">#FFFFFF</color>
