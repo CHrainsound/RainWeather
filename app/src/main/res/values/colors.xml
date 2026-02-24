@@ -3,25 +3,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="button_tint">#66FFFFFF</color>
-    <color name="moderate">#E0BA00</color>
-    <color name="light_polution">#FF7F50</color>
-    <color name="heavy_polution">#760000</color>
-    <color name="good">#16CE02</color>
     <!-- AQI 柱子 -->
     <color name="aqi_yellow">#FFC107</color>
     <color name="gray_light">#E0E0E0</color>
     <color name="text_primary">#212121</color>
 
 
-    <!-- AQI 颜色标准 (参考之前的建议) -->
-    <color name="aqi_good">#16CE02</color> <!-- 优 - 深绿 -->
-    <color name="aqi_moderate">#FFDE33</color> <!-- 良 - 亮黄 -->
-    <color name="aqi_unhealthy_for_sensitive">#FF9933</color> <!-- 轻度污染 - 橙黄 -->
-    <color name="aqi_unhealthy">#CC0033</color> <!-- 中度污染 - 红色 -->
-    <color name="aqi_very_unhealthy">#660099</color> <!-- 重度污染 - 紫色 -->
-    <color name="aqi_hazardous">#7E0023</color> <!-- 严重污染 - 褐红色 -->
+    <!-- AQI 颜色标准 -->
+    <color name="aqi_good">#16CE02</color>
+    <color name="aqi_moderate">#FFDE33</color>
+    <color name="aqi_unhealthy_for_sensitive">#FF9933</color>
+    <color name="aqi_unhealthy">#CC0033</color>
+    <color name="aqi_very_unhealthy">#660099</color>
+    <color name="aqi_hazardous">#7E0023</color>
 
-    <!-- 辅助颜色 -->
     <color name="gray">#888888</color>
 
 
