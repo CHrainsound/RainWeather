@@ -51,7 +51,7 @@
             android:id="@+id/tv_aqitop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="天气质量"
+            android:text="空气质量"
             android:textSize="40sp"
             app:layout_constraintStart_toStartOf="@id/gl_left"
             app:layout_constraintTop_toTopOf="@id/gl_main" />
