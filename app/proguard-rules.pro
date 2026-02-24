@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.example.rainweather.repository.WeatherRepository$LocationListener { *; }
+-keep class com.example.rainweather.utils.LocationUtils$OnCityNameListener { *; }
+-keep class com.example.rainweather.utils.LocationUtils { *; }
+-keep class com.example.rainweather.repository.model.MapResponse { *; }
+-keep class com.example.rainweather.repository.model.MapResponse$* { *; }
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature, InnerClasses
+-keep class com.google.gson.** { *; }
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**

@@ -134,7 +134,7 @@ public class WeatherRepository {
         });
     }
     /**
-     * 使用新的 LocationUtils 解析位置
+     * 使用LocationUtils 解析位置
      */
     private void parseLocationWithUtils(double latitude, double longitude, String locationStr, MutableLiveData<Resource<WeatherResponse>> result) {
         LocationUtils.getCityName(latitude, longitude, new LocationUtils.OnCityNameListener() {
