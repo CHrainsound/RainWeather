@@ -16,8 +16,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -25,7 +23,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private int currentVideoResId = -1;
 
     // UI
-    private TextView tvTemperature, tvWeatherDesc, tvLocation, tvKeyPoint, tvRain,tvRainTitle, tvCarWashing, tvUltraviolet, tvAPTemperature, tvAPTemperaturedesc, tvPressure, tvhumidity;
+    private TextView tvTemperature, tvWeatherDesc, tvLocation, tvKeyPoint, tvRain, tvRainTitle, tvCarWashing, tvUltraviolet, tvAPTemperature, tvAPTemperaturedesc, tvPressure, tvhumidity;
     private MaterialButton mbtnAqi, mbtnMore;
     private HourlyTemperatureChart hourlyChart;
 
@@ -121,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
         mbtnMore = binding.btnMore;
         tvRain = binding.tvRain;
         tvUltraviolet = binding.tvUltraviole;
-        tvAPTemperature =binding.tvApparentTemperature;
-        tvAPTemperaturedesc =binding.tvApparentTemperatureDesc;
+        tvAPTemperature = binding.tvApparentTemperature;
+        tvAPTemperaturedesc = binding.tvApparentTemperatureDesc;
         tvhumidity = binding.tvHumidity;
         tvPressure = binding.tvPressure;
         tvCarWashing = binding.tvCarWashing;
@@ -289,19 +286,19 @@ public class MainActivity extends AppCompatActivity {
 
         //更新卡片组
         tvUltraviolet.setText(weather.result.realtime.lifeIndex.ultraviolet.desc);
-        tvAPTemperature.setText((weather.result.realtime.apparentTemperature)+" ℃");
+        tvAPTemperature.setText((weather.result.realtime.apparentTemperature) + " ℃");
         tvAPTemperaturedesc.setText(weather.result.realtime.lifeIndex.comfort.desc);
-        tvhumidity.setText((int) (weather.result.realtime.humidity*100)+" %");
-        tvPressure.setText((int)(weather.result.realtime.pressure)/100+" hPa");
+        tvhumidity.setText((int) (weather.result.realtime.humidity * 100) + " %");
+        tvPressure.setText((int) (weather.result.realtime.pressure) / 100 + " hPa");
         tvCarWashing.setText(weather.result.daily.lifeIndex.carWashing.get(0).desc);
 
-        if(weather.result.realtime.precipitation.local.intensity>0){
+        if (weather.result.realtime.precipitation.local.intensity > 0) {
             tvRainTitle.setText("当前降雨量");
-            tvRain.setText(weather.result.realtime.precipitation.local.intensity+" mm/hr");
-        }else if(weather.result.realtime.precipitation.nearest.intensity>0){
+            tvRain.setText(weather.result.realtime.precipitation.local.intensity + " mm/hr");
+        } else if (weather.result.realtime.precipitation.nearest.intensity > 0) {
             tvRainTitle.setText("降水预报");
-            tvRain.setText("最近降水带距离 "+weather.result.realtime.precipitation.nearest.distance+" km");
-        }else{
+            tvRain.setText("降水带距离 " + weather.result.realtime.precipitation.nearest.distance + " km");
+        } else {
             tvRainTitle.setText("降水预报");
             tvRain.setText("放心吧，短期不会降雨");
 
@@ -413,7 +410,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -442,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // 解绑视图
         if (binding != null) {
-            binding.pvBackground.setPlayer(null); // 防止内存泄漏
+            binding.pvBackground.setPlayer(null);
         }
         binding = null;
     }

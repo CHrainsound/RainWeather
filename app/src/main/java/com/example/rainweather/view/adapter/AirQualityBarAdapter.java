@@ -47,12 +47,12 @@ public class AirQualityBarAdapter extends RecyclerView.Adapter<AirQualityBarAdap
     public void onBindViewHolder(@NonNull BarViewHolder holder, int position) {
         AirQualityItem item = dataList.get(position);
 
-        // 1. 设置时间文本
+        //设置时间文本
         holder.tvTime.setText(item.getTime());
         holder.tvAqi.setText(String.valueOf(item.getAqi()));
 
 
-        // 2. 计算柱状图高度（像素）
+        //计算柱状图高度（像素）
         int maxBarHeightPx = (int) (MAX_BAR_HEIGHT_DP * context.getResources().getDisplayMetrics().density);
         int calculatedHeight = (int) ((Math.min(item.getAqi(), 500) / 500.0f) * maxBarHeightPx);
         int height = Math.max(calculatedHeight, 1); // 至少 3px

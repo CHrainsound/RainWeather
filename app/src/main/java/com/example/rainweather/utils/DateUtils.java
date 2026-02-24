@@ -6,19 +6,12 @@ package com.example.rainweather.utils;
  * email : 3014386984@qq.com
  * date : 2/11 12:00
  */
-import android.content.Context;
-import android.text.TextUtils;
 
-import com.example.rainweather.R;
-import com.example.rainweather.repository.model.DailyWeatherItem;
-import com.example.rainweather.repository.model.WeatherResponse;
+import android.text.TextUtils;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DateUtils {
 

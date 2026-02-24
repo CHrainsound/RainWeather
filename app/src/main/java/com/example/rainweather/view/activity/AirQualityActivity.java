@@ -132,7 +132,7 @@ public class AirQualityActivity extends AppCompatActivity {
     private void showDailyChart() {
         recyclerViewHourly.setVisibility(View.GONE);
         recyclerViewDaily.setVisibility(View.VISIBLE);
-        tvhourdayTitle.setText("15天空气质量预报");
+        tvhourdayTitle.setText("多日空气质量预报");
 
     }
 
@@ -169,12 +169,6 @@ public class AirQualityActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * 显示错误信息
-     */
-    private void showError(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
 
 
     /**

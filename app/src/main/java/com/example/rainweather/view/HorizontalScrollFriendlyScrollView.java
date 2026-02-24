@@ -53,7 +53,7 @@ public class HorizontalScrollFriendlyScrollView extends NestedScrollView {
                 }
                 break;
         }
-        // 其他情况，按默认逻辑处理（比如纵向滚动）
+        // 其他情况，按默认逻辑处理
         return super.onInterceptTouchEvent(ev);
     }
 }

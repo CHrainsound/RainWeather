@@ -119,8 +119,7 @@ public class WeatherRepository {
                     double longitude = location.getLongitude();
                     String locationStr = longitude + "," + latitude;
 
-                    // --- 关键修改：使用 LocationUtils 异步解析 ---
-                    // 切回主线程或直接在子线程调用（Retrofit 不限制调用线程）
+                    // 使用 LocationUtils 异步解析
                     mainHandler.post(() -> {
                         result.setValue(Resource.loading(null)); // 显示加载中
                         parseLocationWithUtils(latitude, longitude, locationStr, result);
@@ -276,7 +275,7 @@ public class WeatherRepository {
         editor.apply();
     }
 
-    // --- 为了配合 ViewModel 更新 UI ---
+    // 配合ViewModel更新UI
 
     private final MutableLiveData<String> locationName = new MutableLiveData<>();
 
@@ -318,10 +317,7 @@ public class WeatherRepository {
         boolean isMoreAccurate = accuracyDelta < 0;
         boolean isSlightlyLessAccurate = accuracyDelta > 0 && accuracyDelta < 200;
 
-        boolean isFromSameProvider = false;
-        if (newLocation.getProvider() != null && newLocation.getProvider().equals(currentBestLocation.getProvider())) {
-            isFromSameProvider = true;
-        }
+        boolean isFromSameProvider = newLocation.getProvider() != null && newLocation.getProvider().equals(currentBestLocation.getProvider());
 
         if (isMoreAccurate || (isSlightlyLessAccurate && isFromSameProvider)) {
             return newLocation;

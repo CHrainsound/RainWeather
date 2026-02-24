@@ -79,8 +79,12 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
         notifyDataSetChanged();
     }
 
-    // —————— 工具方法 ——————
-//↓天气现象绑定
+
+    /**
+     * 天气现象绑定
+     * @param skycon
+     * @return
+     */
     public String skyconToChinese(String skycon) {
         switch (skycon) {
             case "CLEAR_DAY":
@@ -134,7 +138,11 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
         }
     }
 
-    //↓天气图标绑定
+    /**
+     * 天气图标绑定
+     * @param skycon
+     * @return
+     */
     private String getLottieFileName(String skycon) {
         switch (skycon) {
             case "CLEAR_DAY":
@@ -174,7 +182,7 @@ public class DailyWeatherAdapter extends RecyclerView.Adapter<DailyWeatherAdapte
         LottieAnimationView animationView;
         TextView tvDate;
         TextView tvWeather;
-        TextView tvTempRange; // 合并后的温度显示
+        TextView tvTempRange;
         String currentLottieFile = "";
 
         ViewHolder(@NonNull View itemView) {

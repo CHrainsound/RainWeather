@@ -57,7 +57,6 @@ public class LocationUtils {
                         }
 
                         // 回调结果
-                        // 这里返回了 城市名、区县名、乡镇街道名
                         listener.onSuccess(finalCity, district, component.township, adcode);
                     } else {
                         // 高德接口返回了错误信息
@@ -75,7 +74,6 @@ public class LocationUtils {
         });
     }
 
-    // 修正后的回调接口
     public interface OnCityNameListener {
         // 参数：城市名, 区/县, 镇/街道, 行政区划代码
         void onSuccess(String cityName, String district, String town, String adcode);

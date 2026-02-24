@@ -1,6 +1,5 @@
 package com.example.rainweather.repository.model;
 
-import java.util.List;
 
 /**
  * description ：高德逆地理编码模型类
@@ -27,7 +26,6 @@ public class MapResponse {
         public String adcode;   // 行政区划代码
 
     }
-
 
 
 }
