@@ -93,7 +93,7 @@
                         android:fontFamily="sans-serif-light"
                         android:text="-4°"
                         android:textColor="#FFFFFF"
-                        android:textSize="120sp"
+                        android:textSize="150sp"
                         app:layout_constraintStart_toStartOf="@+id/gl_left"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="-4°" />
@@ -115,13 +115,12 @@
                     <!-- AQI -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_air_quality"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="-5dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/ic_aqi_button_background"
-                        android:backgroundTint="#30FFFFFF"
+                        app:backgroundTint="#40FFFFFF"
                         android:minWidth="0dp"
                         android:minHeight="0dp"
                         android:paddingStart="12dp"
@@ -576,6 +575,9 @@
 
                             </androidx.cardview.widget.CardView>
                         </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"/>
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
