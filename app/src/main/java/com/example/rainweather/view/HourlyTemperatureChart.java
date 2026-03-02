@@ -298,12 +298,8 @@ public class HourlyTemperatureChart extends View {
     private void applyBoundaryLimit() {
         if (mData == null || mData.isEmpty() || mItemWidth <= 0) return;
 
-        // 真实内容总宽度 = (总项数 - 1) * mItemWidth
         int spanWidth = (mData.size() - 1) * mItemWidth;
-        // 动态计算可视宽度（与 updateItemWidth 一致）
-        int displayCount = Math.min(Math.max(5, mData.size()), 8);
-        int visibleSpan = (displayCount - 1) * mItemWidth;
-
+        int visibleSpan = (mVisibleItemCount - 1) * mItemWidth;
         float maxX = Math.max(0, spanWidth - visibleSpan);
 
         if (mTranslateX > 0) {
