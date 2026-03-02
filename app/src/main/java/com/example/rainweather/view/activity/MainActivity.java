@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
      * 初始化视图组件
      */
     private void initViews() {
-        // 初始化 UI 控件 (修复空指针风险)
         tvTemperature = binding.tvTemperature;
         tvLocation = binding.tvLocation;
         tvWeatherDesc = binding.tvWeatherDesc;
@@ -125,11 +124,9 @@ public class MainActivity extends AppCompatActivity {
         tvCarWashing = binding.tvCarWashing;
         tvRainTitle = binding.tvRainTitle;
 
-        // RecyclerView
         binding.rvDailyForecast.setLayoutManager(new LinearLayoutManager(this));
         binding.rvDailyForecast.setAdapter(dailyAdapter);
 
-        // ExoPlayer
         exoPlayer = new ExoPlayer.Builder(this).build();
         binding.pvBackground.setPlayer(exoPlayer);
         binding.pvBackground.setKeepContentOnPlayerReset(true);

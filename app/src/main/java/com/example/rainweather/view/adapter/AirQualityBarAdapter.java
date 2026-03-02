@@ -27,7 +27,7 @@ public class AirQualityBarAdapter extends RecyclerView.Adapter<AirQualityBarAdap
     private List<AirQualityItem> dataList = new ArrayList<>();
     private Context context;
 
-    // 最大柱状图高度（dp）
+    // 最大柱状图高度
     private static final int MAX_BAR_HEIGHT_DP = 110;
 
     public AirQualityBarAdapter(Context context) {

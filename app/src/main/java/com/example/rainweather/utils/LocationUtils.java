@@ -36,7 +36,7 @@ public class LocationUtils {
                 if (response.isSuccessful() && response.body() != null) {
                     MapResponse mapResponse = response.body();
 
-                    // 核心逻辑：高德API成功状态码是字符串 "1"
+                    // 高德API成功状态码是1
                     if ("1".equals(mapResponse.status) && mapResponse.regeocode != null) {
                         MapResponse.AddressComponent component = mapResponse.regeocode.addressComponent;
 
@@ -65,7 +65,7 @@ public class LocationUtils {
     }
 
     public interface OnCityNameListener {
-        // 参数：城市名, 区/县, 镇/街道, 行政区划代码
+        // 参数：区/县, 镇/街道, 行政区划代码
         void onSuccess( String district, String town, String adcode);
 
         void onError(String errorMsg);

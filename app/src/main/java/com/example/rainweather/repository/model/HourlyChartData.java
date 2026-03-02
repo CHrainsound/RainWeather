@@ -36,7 +36,7 @@ public class HourlyChartData {
         this.displayTime = sdf.format(new java.util.Date(timestamp));
     }
 
-    // === 静态工具方法 ===
+    //静态工具方法
     private static String convertWindSpeedToLevel(float windSpeedKmh) {
         if (windSpeedKmh <= 0) return "静风";
         float windSpeedMs = windSpeedKmh / 3.6f; // km/h → m/s
