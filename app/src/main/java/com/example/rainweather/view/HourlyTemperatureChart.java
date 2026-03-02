@@ -147,7 +147,7 @@ public class HourlyTemperatureChart extends View {
                 canvas.drawCircle(x, y, 10, mCirclePaint);
                 mCirclePaint.setColor(mLineColor);
             } else if (data.isSunEvent) {
-                // 日出/日落点：稍大一点，或用不同颜色
+                // 日出/日落点：稍大一点，用不同颜色
                 Paint sunPaint = new Paint(mCirclePaint);
                 sunPaint.setColor(Color.parseColor("#FFD700")); // 金色
                 canvas.drawCircle(x, y, 10, mSunPaint);
@@ -348,8 +348,6 @@ public class HourlyTemperatureChart extends View {
         float padding = range * 0.08f;
         min -= padding;
         max += padding;
-
-        // 对齐到“好看”的数字（如 5 的倍数，或 1 的倍数）
         float niceMin = (float) Math.floor(min);
         float niceMax = (float) Math.ceil(max);
 

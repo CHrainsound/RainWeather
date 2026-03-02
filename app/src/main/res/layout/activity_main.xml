@@ -387,15 +387,15 @@
 
                                     <TextView
                                         android:id="@+id/tv_apparent_temperatureDesc"
-                                        android:layout_width="49dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="35dp"
-                                        android:layout_marginEnd="10dp"
                                         android:layout_marginTop="5dp"
                                         app:layout_constraintTop_toTopOf="parent"
                                         android:text="刺骨的冷"
                                         android:textColor="@color/button_tint"
                                         android:textSize="12sp"
-                                        app:layout_constraintEnd_toEndOf="parent" />
+                                        app:layout_constraintStart_toStartOf="@id/tv_apparent_temperatureicon"
+                                        app:layout_constraintEnd_toEndOf="@id/tv_apparent_temperatureicon" />
 
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 

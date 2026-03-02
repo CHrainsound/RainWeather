@@ -133,7 +133,7 @@ public class HourlyChartData {
         return list;
     }
 
-    // 辅助方法：HH:mm → 分钟数（用于排序）
+    // 辅助方法：小时:分钟 → 分钟数（用于排序）
     private static int timeToMinutes(String timeStr) {
         if (timeStr == null || !timeStr.contains(":")) return 0;
         String[] parts = timeStr.split(":");

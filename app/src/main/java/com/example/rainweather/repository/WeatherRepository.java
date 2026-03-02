@@ -35,8 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WeatherRepository {
-    private MapService mapService;
-
     private static WeatherRepository instance;
     private final CaiyunApiService apiService;
     private final SharedPreferences sharedPreferences;
@@ -58,7 +56,6 @@ public class WeatherRepository {
     private WeatherRepository(Context context) {
         this.context = context.getApplicationContext();
         this.apiService = ApiClient.getClient();
-        this.mapService = MapClient.getClient();
         this.sharedPreferences = context.getSharedPreferences("weather_cache", Context.MODE_PRIVATE);
         this.gson = new Gson();
         this.executorService = Executors.newSingleThreadExecutor();

@@ -29,7 +29,6 @@ public class MainViewModel extends AndroidViewModel {
 
     private final WeatherRepository repository;
 
-    //内部持有 MutableLiveData
     private final MediatorLiveData<Resource<WeatherResponse>> weatherState = new MediatorLiveData<>();
     private final MediatorLiveData<String> locationName = new MediatorLiveData<>();
     private final MediatorLiveData<List<HourlyChartData>> hourlyChartData = new MediatorLiveData<>();

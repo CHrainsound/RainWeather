@@ -262,7 +262,6 @@ public class WeatherResponse implements Serializable {
     }
 
 
-
     public static class DailyTemp implements Serializable {
         @SerializedName("date")
         public String date;
@@ -275,9 +274,6 @@ public class WeatherResponse implements Serializable {
 
 
     }
-
-
-
 
 
     public static class DailySkycon implements Serializable {
@@ -307,7 +303,6 @@ public class WeatherResponse implements Serializable {
     }
 
 
-
     public static class DailyLifeIndex implements Serializable {
 
 
@@ -316,7 +311,6 @@ public class WeatherResponse implements Serializable {
 
 
     }
-
 
 
     public static class DailyIndex implements Serializable {
