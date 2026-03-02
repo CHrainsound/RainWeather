@@ -43,21 +43,11 @@ public class LocationUtils {
                         // 提取行政区划代码Adcode
                         String adcode = component.adcode;
 
-                        // 提取城市名
-                        String province = component.province;
-                        String city = component.city;
+                        // 提取区县
                         String district = component.district;
 
-                        // 高德对于直辖市（如上海），city字段可能为空或者和province一样，此时用 province 作为 city 显示
-                        String finalCity;
-                        if (city == null || city.isEmpty() || "[]".equals(city)) {
-                            finalCity = province;
-                        } else {
-                            finalCity = city;
-                        }
-
                         // 回调结果
-                        listener.onSuccess(finalCity, district, component.township, adcode);
+                        listener.onSuccess(district, component.township, adcode);
                     } else {
                         // 高德接口返回了错误信息
                         listener.onError("高德API错误: " + mapResponse.info);
@@ -76,7 +66,7 @@ public class LocationUtils {
 
     public interface OnCityNameListener {
         // 参数：城市名, 区/县, 镇/街道, 行政区划代码
-        void onSuccess(String cityName, String district, String town, String adcode);
+        void onSuccess( String district, String town, String adcode);
 
         void onError(String errorMsg);
     }

@@ -12,13 +12,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import com.example.rainweather.repository.model.WeatherResponse;
 import com.example.rainweather.repository.network.ApiClient;
 import com.example.rainweather.repository.network.CaiyunApiService;
@@ -28,8 +31,10 @@ import com.example.rainweather.utils.ApiConstants;
 import com.example.rainweather.utils.LocationUtils;
 import com.example.rainweather.utils.Resource;
 import com.google.gson.Gson;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,17 +135,18 @@ public class WeatherRepository {
             }
         });
     }
+
     /**
      * 使用LocationUtils 解析位置
      */
     private void parseLocationWithUtils(double latitude, double longitude, String locationStr, MutableLiveData<Resource<WeatherResponse>> result) {
         LocationUtils.getCityName(latitude, longitude, new LocationUtils.OnCityNameListener() {
             @Override
-            public void onSuccess(String cityName, String district, String town, String adcode) {
-                // 拼接显示名称：例如 "吉林市 丰满区"
-                String displayCity = cityName;
-                if (district != null && !district.isEmpty() && !cityName.contains(district)) {
-                    displayCity +=district+ " " + town;
+            public void onSuccess(String district, String town, String adcode) {
+                // 拼接显示名称：例如 "南岗区 南昌路"
+                String displayCity = null;
+                if (district != null && !district.isEmpty() ) {
+                    displayCity = district + " " + town;
                 }
                 // 更新城市名 LiveData
                 locationName.postValue(displayCity);
@@ -321,6 +327,7 @@ public class WeatherRepository {
         }
         return currentBestLocation;
     }
+
     public void cleanup() {
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();

@@ -19,8 +19,6 @@ public class MapResponse {
     }
 
     public static class AddressComponent {
-        public String city;    // 城市名
-        public String province; // 省份名
         public String district; // 区/县名
         public String township; // 乡镇/街道
         public String adcode;   // 行政区划代码
