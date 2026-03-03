@@ -103,35 +103,38 @@ public class WeatherRepository {
      * 但核心的网络解析交给 LocationUtils (异步)
      */
     private void fetchLocationAndWeatherAsync(MutableLiveData<Resource<WeatherResponse>> result) {
-        executorService.execute(() -> {
-            try {
-                if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    mainHandler.post(() -> result.setValue(Resource.error("定位权限被拒绝", null)));
-                    return;
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        mainHandler.post(() -> result.setValue(Resource.error("定位权限被拒绝", null)));
+                        return;
+                    }
+
+                    Location location = WeatherRepository.this.getLastKnownLocation();
+                    if (location == null) {
+                        location = WeatherRepository.this.requestSingleUpdate();
+                    }
+
+                    if (location != null) {
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        String locationStr = longitude + "," + latitude;
+
+                        // 使用 LocationUtils 异步解析
+                        mainHandler.post(() -> {
+                            result.setValue(Resource.loading(null)); // 显示加载中
+                            WeatherRepository.this.parseLocationWithUtils(latitude, longitude, locationStr, result);
+                        });
+
+                    } else {
+                        mainHandler.post(() -> result.setValue(Resource.error("无法获取定位", null)));
+                    }
+                } catch (Exception e) {
+                    mainHandler.post(() -> result.setValue(Resource.error("定位失败: " + e.getMessage(), null)));
                 }
-
-                Location location = getLastKnownLocation();
-                if (location == null) {
-                    location = requestSingleUpdate();
-                }
-
-                if (location != null) {
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
-                    String locationStr = longitude + "," + latitude;
-
-                    // 使用 LocationUtils 异步解析
-                    mainHandler.post(() -> {
-                        result.setValue(Resource.loading(null)); // 显示加载中
-                        parseLocationWithUtils(latitude, longitude, locationStr, result);
-                    });
-
-                } else {
-                    mainHandler.post(() -> result.setValue(Resource.error("无法获取定位", null)));
-                }
-            } catch (Exception e) {
-                mainHandler.post(() -> result.setValue(Resource.error("定位失败: " + e.getMessage(), null)));
             }
         });
     }

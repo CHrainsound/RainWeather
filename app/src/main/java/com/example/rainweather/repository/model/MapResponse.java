@@ -1,12 +1,14 @@
 package com.example.rainweather.repository.model;
 
 
+import java.io.Serializable;
+
 /**
  * description ：高德逆地理编码模型类
  * email : 3014386984@qq.com
  * date : 2/19 14:00
  */
-public class MapResponse {
+public class MapResponse implements Serializable {
 
     public String status;
     public String info;

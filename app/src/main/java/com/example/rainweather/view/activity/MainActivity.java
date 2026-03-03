@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
             tvRain.setText(weather.result.realtime.precipitation.local.intensity + " mm/hr");
         } else if (weather.result.realtime.precipitation.nearest.intensity > 0) {
             tvRainTitle.setText("降水预报");
-            tvRain.setText("降水带距离 " + weather.result.realtime.precipitation.nearest.distance + " km");
+            tvRain.setText("降水带距离 " +(int) weather.result.realtime.precipitation.nearest.distance + " km");
         } else {
             tvRainTitle.setText("降水预报");
             tvRain.setText("放心吧，短期不会降雨");
