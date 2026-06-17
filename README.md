@@ -52,7 +52,7 @@
 ---
 
 ## 项目结构
-
+```text
 RainWeather/
 ├── app/
 │   └── src/
@@ -74,6 +74,7 @@ RainWeather/
 ├── gradlew.bat
 ├── settings.gradle
 └── README.md
+```
 ---
 
 ## 待优化清单
