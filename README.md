@@ -53,30 +53,27 @@
 
 ## 项目结构
 
-   RainWeather/
-├── app/                                # 主应用模块
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/example/rainweather/
-│   │   │   │   ├── MainActivity.java   # 主界面 (Activity)
-│   │   │   │   ├── model/              # 数据模型层 (Gson解析实体)
-│   │   │   │   ├── network/            # 网络请求层 (Retrofit + API接口)
-│   │   │   │   ├── viewmodel/          # ViewModel层 (数据持有与UI更新)
-│   │   │   │   └── utils/              # 工具类 (缓存管理、视频选择等)
-│   │   │   ├── res/                    # 资源文件 (布局、图片、动画)
-│   │   │   └── AndroidManifest.xml
-│   │   └── test/                       # 单元测试目录
-│   ├── build.gradle                    # 应用级构建配置
-│   └── proguard-rules.pro              # 代码混淆规则
-├── gradle/                             # Gradle 包装器
+RainWeather/
+├── app/
+│   └── src/
+│       └── main/
+│           ├── java/com/example/rainweather/
+│           │   ├── MainActivity.java
+│           │   ├── model/
+│           │   ├── network/
+│           │   ├── viewmodel/
+│           │   └── utils/
+│           ├── res/
+│           └── AndroidManifest.xml
+├── gradle/
 │   └── wrapper/
-├── .gitignore                          # Git 忽略文件配置
-├── build.gradle                        # 项目级构建配置
-├── gradle.properties                   # Gradle 属性配置 (含release版混淆修复)
-├── gradlew                             # Gradle 执行脚本 (Unix)
-├── gradlew.bat                         # Gradle 执行脚本 (Windows)
-├── settings.gradle                     # 项目模块设置
-└── README.md                           # 项目说明文档
+├── .gitignore
+├── build.gradle
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── settings.gradle
+└── README.md
 ---
 
 ## 待优化清单
